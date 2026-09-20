@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-x8c8&i@eyy*ycjl@bkz0-bmtmwc26e0&6&#6%!0sj@u#(+@p5y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cartnova-4.onrender.com',
+                 '127.0.0.1',
+                 'localhost',]
 
 
 # Application definition
