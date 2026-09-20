@@ -1,0 +1,544 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Wishlist | CartNova</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+
+        body {
+            background: #f6f7fb;
+        }
+
+        .navbar {
+            padding: 15px 0;
+        }
+
+        .wishlist-hero {
+            background: linear-gradient(135deg, #212529, #343a40);
+            color: white;
+            padding: 55px 0;
+        }
+
+        .wishlist-hero h1 {
+            font-size: 40px;
+            font-weight: 800;
+        }
+
+        .wishlist-hero p {
+            color: rgba(255,255,255,0.75);
+        }
+
+        .wishlist-card {
+            background: white;
+            border: none;
+            border-radius: 18px;
+            overflow: hidden;
+            height: 100%;
+            transition: 0.2s;
+        }
+
+        .wishlist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.10) !important;
+        }
+
+        .product-image-box {
+            height: 240px;
+            background: #f8f9fa;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .heart-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 42px;
+            height: 42px;
+            background: white;
+            color: #dc3545;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+        }
+
+        .category-text {
+            color: #6c757d;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .product-title {
+            font-weight: 750;
+            min-height: 48px;
+        }
+
+        .product-title a {
+            color: #212529;
+            text-decoration: none;
+        }
+
+        .product-title a:hover {
+            color: #495057;
+        }
+
+        .price {
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .stock-text {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .action-btn {
+            border-radius: 9px;
+            font-weight: 600;
+            padding: 9px 12px;
+        }
+
+        .empty-box {
+            background: white;
+            border-radius: 20px;
+            padding: 75px 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .empty-icon {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+
+        footer {
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+
+            .wishlist-hero {
+                padding: 40px 0;
+            }
+
+            .wishlist-hero h1 {
+                font-size: 32px;
+            }
+
+            .product-image-box {
+                height: 220px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a href="{% url 'home' %}"
+           class="navbar-brand fw-bold fs-3">
+
+            <i class="fa-solid fa-cart-shopping me-2"></i>
+            CartNova
+
+        </a>
+
+
+        <div class="d-flex align-items-center gap-3">
+
+            <a href="{% url 'shop' %}"
+               class="btn btn-outline-light">
+
+                <i class="fa-solid fa-store me-2"></i>
+                Shop
+
+            </a>
+
+            <a href="{% url 'cart' %}"
+               class="text-white fs-5"
+               title="Cart">
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="wishlist-hero">
+
+    <div class="container text-center">
+
+        <span class="badge bg-light text-dark px-3 py-2 mb-3">
+
+            <i class="fa-solid fa-heart me-1"></i>
+            Saved Products
+
+        </span>
+
+        <h1>
+            My Wishlist
+        </h1>
+
+        <p class="mb-0">
+            Keep your favorite products saved and ready for later.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- WISHLIST CONTENT -->
+
+<section class="py-5">
+
+    <div class="container">
+
+
+        {% if wishlist_items %}
+
+        <div class="d-flex justify-content-between
+                    align-items-center mb-4 flex-wrap gap-2">
+
+            <div>
+
+                <h4 class="fw-bold mb-1">
+                    Your Saved Items
+                </h4>
+
+                <p class="text-muted mb-0">
+                    Products you saved for later
+                </p>
+
+            </div>
+
+            <a href="{% url 'shop' %}"
+               class="btn btn-outline-dark">
+
+                <i class="fa-solid fa-plus me-1"></i>
+                Add More Products
+
+            </a>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <div class="row g-4">
+
+            {% for item in wishlist_items %}
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+
+                <div class="wishlist-card shadow-sm">
+
+
+                    <!-- IMAGE -->
+
+                    <div class="product-image-box">
+
+                        <img src="{% static 'images/' %}{{ item.product.image }}"
+                             class="product-image"
+                             alt="{{ item.product.name }}">
+
+
+                        <div class="heart-badge">
+
+                            <i class="fa-solid fa-heart"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DETAILS -->
+
+                    <div class="p-4">
+
+                        <div class="category-text mb-2">
+
+                            <i class="fa-solid fa-tag me-1"></i>
+                            {{ item.product.category.name }}
+
+                        </div>
+
+
+                        <h5 class="product-title mb-2">
+
+                            <a href="{% url 'product_detail' item.product.id %}">
+
+                                {{ item.product.name }}
+
+                            </a>
+
+                        </h5>
+
+
+                        <div class="d-flex justify-content-between
+                                    align-items-center mb-3">
+
+                            <span class="price">
+                                ₹{{ item.product.price }}
+                            </span>
+
+
+                            {% if item.product.stock > 0 %}
+
+                            <span class="stock-text text-success">
+
+                                <i class="fa-solid fa-circle-check me-1"></i>
+                                In Stock
+
+                            </span>
+
+                            {% else %}
+
+                            <span class="stock-text text-secondary">
+
+                                <i class="fa-solid fa-circle-xmark me-1"></i>
+                                Out of Stock
+
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        {% if item.product.stock > 0 %}
+
+                        <a href="{% url 'add_to_cart' item.product.id %}"
+                           class="btn btn-dark action-btn w-100 mb-2">
+
+                            <i class="fa-solid fa-cart-plus me-2"></i>
+                            Add to Cart
+
+                        </a>
+
+                        {% else %}
+
+                        <button class="btn btn-secondary action-btn w-100 mb-2"
+                                disabled>
+
+                            <i class="fa-solid fa-ban me-2"></i>
+                            Out of Stock
+
+                        </button>
+
+                        {% endif %}
+
+
+                        <div class="d-flex gap-2">
+
+                            <a href="{% url 'product_detail' item.product.id %}"
+                               class="btn btn-outline-dark action-btn flex-grow-1">
+
+                                <i class="fa-solid fa-eye me-1"></i>
+                                View Product
+
+                            </a>
+
+                            <a href="{% url 'remove_from_wishlist' item.id %}"
+                               class="btn btn-outline-danger action-btn"
+                               title="Remove from Wishlist">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <!-- EMPTY WISHLIST -->
+
+        <div class="empty-box text-center">
+
+            <div class="empty-icon">
+
+                <i class="fa-regular fa-heart fa-3x text-muted"></i>
+
+            </div>
+
+            <h3 class="fw-bold mb-2">
+                Your Wishlist is Empty
+            </h3>
+
+            <p class="text-muted mb-4">
+
+                You haven't saved any products yet.
+                Explore our store and save products you love.
+
+            </p>
+
+            <a href="{% url 'shop' %}"
+               class="btn btn-dark px-4 py-2">
+
+                <i class="fa-solid fa-store me-2"></i>
+                Explore Shop
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer class="bg-dark text-white py-5">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+
+                <h4 class="fw-bold">
+
+                    <i class="fa-solid fa-cart-shopping me-2"></i>
+                    CartNova
+
+                </h4>
+
+                <p class="text-white-50 mb-0">
+
+                    Your trusted destination for quality products
+                    and a simple shopping experience.
+
+                </p>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <h6 class="fw-bold mb-3">
+                    Quick Links
+                </h6>
+
+                <a href="{% url 'home' %}"
+                   class="d-block text-white-50 text-decoration-none mb-2">
+
+                    Home
+
+                </a>
+
+                <a href="{% url 'shop' %}"
+                   class="d-block text-white-50 text-decoration-none">
+
+                    Shop
+
+                </a>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <h6 class="fw-bold mb-3">
+                    Shopping
+                </h6>
+
+                <a href="{% url 'cart' %}"
+                   class="d-block text-white-50 text-decoration-none mb-2">
+
+                    Cart
+
+                </a>
+
+                <a href="{% url 'my_orders' %}"
+                   class="d-block text-white-50 text-decoration-none">
+
+                    My Orders
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <hr class="border-secondary my-4">
+
+
+        <div class="text-center text-white-50">
+
+            <small>
+                © 2026 CartNova. All Rights Reserved.
+            </small>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>

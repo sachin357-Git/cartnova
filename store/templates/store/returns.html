@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Returns & Refunds | CartNova</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            color: #222;
+        }
+
+        .navbar {
+            background: #111827;
+        }
+
+        .navbar-brand {
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: white !important;
+            margin-left: 12px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #111827, #374151);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: 15px auto 0;
+            color: #d1d5db;
+            font-size: 18px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            color: #6b7280;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            height: 100%;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .info-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 15px;
+            background: #111827;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 20px;
+        }
+
+        .info-card h4 {
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        .policy-box {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            height: 100%;
+        }
+
+        .policy-box h4 {
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .policy-box ul {
+            padding-left: 20px;
+        }
+
+        .policy-box li {
+            color: #6b7280;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .steps {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .step {
+            position: relative;
+            padding: 10px 0 35px 35px;
+        }
+
+        .step-number {
+            position: absolute;
+            left: -2px;
+            top: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #111827;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .step::after {
+            content: "";
+            position: absolute;
+            left: 12px;
+            top: 35px;
+            width: 2px;
+            height: calc(100% - 15px);
+            background: #d1d5db;
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .step h5 {
+            font-weight: 700;
+        }
+
+        .step p {
+            color: #6b7280;
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #111827, #374151);
+            color: white;
+            border-radius: 22px;
+            padding: 45px;
+        }
+
+        .highlight-box p {
+            color: #d1d5db;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            padding: 45px 0 20px;
+            margin-top: 70px;
+        }
+
+        footer h5 {
+            font-weight: 700;
+        }
+
+        footer p,
+        footer a {
+            color: #9ca3af;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            margin-top: 30px;
+            padding-top: 20px;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .highlight-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fa-solid fa-cart-shopping me-2"></i>
+            CartNova
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop' %}">
+                        Shop
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'categories' %}">
+                        Categories
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'offers' %}">
+                        Offers
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">
+                        About
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <div class="container">
+
+        <h1>
+            Returns & Refunds
+        </h1>
+
+        <p>
+            We want your CartNova shopping experience to be simple,
+            transparent and hassle-free.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- OVERVIEW -->
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="text-center">
+
+            <h2 class="section-title">
+                Easy Returns & Support
+            </h2>
+
+            <p class="section-subtitle">
+                Here is a simple overview of how returns and refunds
+                can be handled.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </div>
+
+                    <h4>
+                        Return Request
+                    </h4>
+
+                    <p>
+                        If you need help with an order, contact our support
+                        team and provide your order information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+
+                    <h4>
+                        Product Review
+                    </h4>
+
+                    <p>
+                        The order and product details may be reviewed before
+                        a return or refund request is processed.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                    </div>
+
+                    <h4>
+                        Refund Process
+                    </h4>
+
+                    <p>
+                        Once a refund is approved, the applicable refund
+                        process can be initiated according to the order.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RETURN PROCESS -->
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="row g-5 align-items-center">
+
+            <div class="col-lg-6">
+
+                <h2 class="section-title">
+                    Return Process
+                </h2>
+
+                <p class="section-subtitle mb-4">
+                    Follow these simple steps when you need assistance
+                    with an order.
+                </p>
+
+                <div class="steps">
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+                        <h5>
+                            Contact Support
+                        </h5>
+
+                        <p>
+                            Contact CartNova support with your order
+                            details and explain the issue.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+                        <h5>
+                            Share Order Information
+                        </h5>
+
+                        <p>
+                            Provide the relevant order information so
+                            the request can be reviewed.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+                        <h5>
+                            Request Review
+                        </h5>
+
+                        <p>
+                            The return or refund request is reviewed
+                            based on the applicable order conditions.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            4
+                        </div>
+
+                        <h5>
+                            Resolution
+                        </h5>
+
+                        <p>
+                            After review, the applicable resolution
+                            and next steps are communicated.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <div class="policy-box">
+
+                    <h4>
+                        Before Requesting a Return
+                    </h4>
+
+                    <ul>
+
+                        <li>
+                            Keep your order information available.
+                        </li>
+
+                        <li>
+                            Describe the issue clearly when contacting support.
+                        </li>
+
+                        <li>
+                            Keep the product and its packaging safely stored
+                            until the request is reviewed.
+                        </li>
+
+                        <li>
+                            Make sure the contact information associated
+                            with your order is correct.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- REFUND INFORMATION -->
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="text-center">
+
+            <h2 class="section-title">
+                Refund Information
+            </h2>
+
+            <p class="section-subtitle">
+                Important information about refund requests.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+
+                <div class="policy-box">
+
+                    <h4>
+                        <i class="fa-solid fa-circle-check me-2"></i>
+                        Refund Review
+                    </h4>
+
+                    <p class="text-secondary">
+                        Refund requests may need to be reviewed before
+                        they are approved. The outcome can depend on
+                        the order and product details.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <div class="policy-box">
+
+                    <h4>
+                        <i class="fa-solid fa-clock me-2"></i>
+                        Processing Time
+                    </h4>
+
+                    <p class="text-secondary">
+                        Refund processing time can vary depending on
+                        the request and the payment method involved.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <div class="policy-box">
+
+                    <h4>
+                        <i class="fa-solid fa-box me-2"></i>
+                        Product Condition
+                    </h4>
+
+                    <p class="text-secondary">
+                        Keep the product in appropriate condition and
+                        retain its packaging and related items while
+                        your request is being reviewed.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <div class="policy-box">
+
+                    <h4>
+                        <i class="fa-solid fa-headset me-2"></i>
+                        Need Assistance?
+                    </h4>
+
+                    <p class="text-secondary">
+                        If you have questions about a return or refund,
+                        contact the CartNova support team.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- IMPORTANT NOTE -->
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="highlight-box text-center">
+
+            <i class="fa-solid fa-circle-info fa-3x mb-3"></i>
+
+            <h2 class="fw-bold">
+                Need Help With Your Order?
+            </h2>
+
+            <p class="mt-3 mb-4">
+                If you are facing an issue with a product or order,
+                our support team can help you understand the next steps.
+            </p>
+
+            <a href="{% url 'contact' %}"
+               class="btn btn-light px-4">
+
+                <i class="fa-solid fa-headset me-2"></i>
+                Contact Support
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <h5>
+                    <i class="fa-solid fa-cart-shopping me-2"></i>
+                    CartNova
+                </h5>
+
+                <p class="mt-3">
+                    Your trusted destination for shopping,
+                    great products and a smooth online experience.
+                </p>
+
+            </div>
+
+
+            <div class="col-md-2">
+
+                <h5>
+                    Quick Links
+                </h5>
+
+                <p class="mt-3">
+                    <a href="{% url 'home' %}">
+                        Home
+                    </a>
+                </p>
+
+                <p>
+                    <a href="{% url 'shop' %}">
+                        Shop
+                    </a>
+                </p>
+
+                <p>
+                    <a href="{% url 'categories' %}">
+                        Categories
+                    </a>
+                </p>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <h5>
+                    Customer Care
+                </h5>
+
+                <p class="mt-3">
+                    <a href="{% url 'faq' %}">
+                        FAQ
+                    </a>
+                </p>
+
+                <p>
+                    <a href="{% url 'shipping' %}">
+                        Shipping
+                    </a>
+                </p>
+
+                <p>
+                    <a href="{% url 'contact' %}">
+                        Contact Us
+                    </a>
+                </p>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <h5>
+                    Explore
+                </h5>
+
+                <p class="mt-3">
+                    <a href="{% url 'offers' %}">
+                        Offers & Deals
+                    </a>
+                </p>
+
+                <p>
+                    <a href="{% url 'about' %}">
+                        About CartNova
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p class="mb-0">
+                © 2026 CartNova. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,597 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CartNova | My Orders</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+    <style>
+
+        body {
+            background: #f8f9fa;
+        }
+
+
+        /* Navbar */
+
+        .navbar {
+            padding: 14px 0;
+        }
+
+        .navbar-brand {
+            letter-spacing: 0.5px;
+        }
+
+
+        /* Page Header */
+
+        .page-header {
+            margin-bottom: 35px;
+        }
+
+
+        /* Order Card */
+
+        .order-card {
+            border-radius: 16px;
+            transition: 0.3s ease;
+        }
+
+        .order-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08) !important;
+        }
+
+
+        /* Order Image */
+
+        .order-image {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+
+        /* Status */
+
+        .status-badge {
+            font-size: 13px;
+            padding: 8px 14px;
+            border-radius: 20px;
+        }
+
+
+        /* Order Total */
+
+        .order-total {
+            font-size: 22px;
+        }
+
+
+        /* Delivery Box */
+
+        .delivery-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #eeeeee;
+        }
+
+
+        /* View Button */
+
+        .view-btn {
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+
+        /* Empty Orders */
+
+        .empty-icon {
+            font-size: 80px;
+        }
+
+
+        /* Footer */
+
+        footer {
+            margin-top: 50px;
+        }
+
+
+        /* Mobile */
+
+        @media (max-width: 576px) {
+
+            .order-card .card-body {
+                padding: 20px !important;
+            }
+
+            .order-image {
+                width: 65px;
+                height: 65px;
+            }
+
+            .order-total {
+                font-size: 19px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-dark bg-dark">
+
+    <div class="container">
+
+
+        <a href="{% url 'home' %}"
+           class="navbar-brand fw-bold fs-3">
+
+            <i class="fa-solid fa-cart-shopping me-2"></i>
+
+            CartNova
+
+        </a>
+
+
+        <a href="{% url 'home' %}"
+           class="btn btn-outline-light">
+
+            <i class="fa-solid fa-arrow-left me-2"></i>
+
+            Continue Shopping
+
+        </a>
+
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= MY ORDERS ================= -->
+
+<section class="py-5">
+
+    <div class="container">
+
+
+        <!-- Header -->
+
+        <div class="page-header text-center">
+
+            <h1 class="fw-bold mb-2">
+
+                <i class="fa-solid fa-box-open me-2"></i>
+
+                My Orders
+
+            </h1>
+
+
+            <p class="text-muted mb-0">
+
+                Track and view all your previous orders.
+
+            </p>
+
+        </div>
+
+
+
+        {% if orders %}
+
+
+            <!-- ================= ORDERS ================= -->
+
+            {% for order in orders %}
+
+
+            <div class="card border-0 shadow-sm order-card mb-4">
+
+
+                <div class="card-body p-4">
+
+
+                    <!-- ORDER HEADER -->
+
+                    <div class="d-flex justify-content-between
+                                align-items-center flex-wrap gap-3">
+
+
+                        <div>
+
+
+                            <small class="text-muted">
+
+                                ORDER ID
+
+                            </small>
+
+
+                            <h4 class="fw-bold mb-1">
+
+                                #{{ order.id }}
+
+                            </h4>
+
+
+                            <small class="text-muted">
+
+                                <i class="fa-regular fa-calendar me-1"></i>
+
+                                {{ order.created_at|date:"d M Y, h:i A" }}
+
+                            </small>
+
+
+                        </div>
+
+
+
+                        <!-- STATUS -->
+
+                        <div>
+
+
+                            {% if order.status == "Pending" %}
+
+                                <span class="badge bg-warning text-dark status-badge">
+
+                                    <i class="fa-solid fa-clock me-1"></i>
+
+                                    Pending
+
+                                </span>
+
+
+                            {% elif order.status == "Processing" %}
+
+                                <span class="badge bg-info text-dark status-badge">
+
+                                    <i class="fa-solid fa-gear me-1"></i>
+
+                                    Processing
+
+                                </span>
+
+
+                            {% elif order.status == "Shipped" %}
+
+                                <span class="badge bg-primary status-badge">
+
+                                    <i class="fa-solid fa-truck me-1"></i>
+
+                                    Shipped
+
+                                </span>
+
+
+                            {% elif order.status == "Delivered" %}
+
+                                <span class="badge bg-success status-badge">
+
+                                    <i class="fa-solid fa-circle-check me-1"></i>
+
+                                    Delivered
+
+                                </span>
+
+
+                            {% elif order.status == "Cancelled" %}
+
+                                <span class="badge bg-danger status-badge">
+
+                                    <i class="fa-solid fa-circle-xmark me-1"></i>
+
+                                    Cancelled
+
+                                </span>
+
+
+                            {% else %}
+
+                                <span class="badge bg-secondary status-badge">
+
+                                    {{ order.status }}
+
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <hr class="my-4">
+
+
+
+                    <!-- ORDER ITEMS -->
+
+                    <h6 class="fw-bold mb-3">
+
+                        <i class="fa-solid fa-bag-shopping me-2"></i>
+
+                        Order Items
+
+                    </h6>
+
+
+
+                    {% for item in order.items.all %}
+
+
+                    <div class="d-flex align-items-center
+                                border-bottom pb-3 mb-3">
+
+
+                        <!-- Product Image -->
+
+                        <img src="{% static 'images/' %}{{ item.product.image }}"
+                             alt="{{ item.product.name }}"
+                             class="rounded order-image me-3">
+
+
+
+                        <!-- Product Details -->
+
+                        <div class="flex-grow-1">
+
+
+                            <h6 class="fw-bold mb-1">
+
+                                {{ item.product.name }}
+
+                            </h6>
+
+
+                            <small class="text-muted">
+
+                                Quantity:
+                                <strong>{{ item.quantity }}</strong>
+
+                                &nbsp; × &nbsp;
+
+                                ₹{{ item.price }}
+
+                            </small>
+
+
+                        </div>
+
+
+
+                        <!-- Item Total -->
+
+                        <strong>
+
+                            ₹{{ item.total_price }}
+
+                        </strong>
+
+
+                    </div>
+
+
+                    {% endfor %}
+
+
+
+                    <!-- ORDER INFORMATION -->
+
+                    <div class="row g-3 mt-2">
+
+
+                        <!-- DELIVERY ADDRESS -->
+
+                        <div class="col-md-8">
+
+
+                            <div class="delivery-box p-3 h-100">
+
+
+                                <small class="text-muted">
+
+                                    <i class="fa-solid fa-location-dot me-1"></i>
+
+                                    Delivery Address
+
+                                </small>
+
+
+                                <p class="mb-0 mt-2">
+
+                                    {{ order.address }}
+
+                                </p>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- TOTAL -->
+
+                        <div class="col-md-4">
+
+
+                            <div class="delivery-box p-3 h-100
+                                        d-flex flex-column
+                                        justify-content-center">
+
+
+                                <small class="text-muted">
+
+                                    Total Amount
+
+                                </small>
+
+
+                                <div class="order-total fw-bold mt-1 mb-3">
+
+                                    ₹{{ order.total_amount }}
+
+                                </div>
+
+
+                                <a href="{% url 'order_detail' order.id %}"
+                                   class="btn btn-dark btn-sm view-btn">
+
+
+                                    <i class="fa-solid fa-eye me-1"></i>
+
+                                    View Details
+
+
+                                </a>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+
+        {% else %}
+
+
+            <!-- ================= EMPTY ORDERS ================= -->
+
+            <div class="card border-0 shadow-sm">
+
+
+                <div class="card-body text-center py-5">
+
+
+                    <i class="fa-solid fa-box-open text-muted empty-icon">
+                    </i>
+
+
+                    <h3 class="fw-bold mt-4">
+
+                        No Orders Yet
+
+                    </h3>
+
+
+                    <p class="text-muted">
+
+                        You haven't placed any orders yet.
+
+                    </p>
+
+
+                    <a href="{% url 'home' %}"
+                       class="btn btn-dark px-4 mt-2">
+
+
+                        <i class="fa-solid fa-cart-shopping me-2"></i>
+
+                        Start Shopping
+
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-dark text-white text-center py-4">
+
+
+    <div class="container">
+
+
+        <p class="mb-1">
+
+            <i class="fa-solid fa-cart-shopping me-1"></i>
+
+            <strong>CartNova</strong>
+
+        </p>
+
+
+        <small class="text-white-50">
+
+            © 2026 CartNova. All Rights Reserved.
+
+        </small>
+
+
+    </div>
+
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Offers & Deals | CartNova</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        body {
+            background: #f5f7fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background: #111827;
+        }
+
+        .navbar-brand {
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: white !important;
+            margin-left: 10px;
+        }
+
+        .offers-hero {
+            background: linear-gradient(135deg, #111827, #374151);
+            color: white;
+            text-align: center;
+            padding: 85px 20px;
+        }
+
+        .offers-hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+        }
+
+        .offers-hero p {
+            max-width: 700px;
+            margin: 15px auto 0;
+            color: #d1d5db;
+            font-size: 18px;
+        }
+
+        .offer-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 8px 25px rgba(0,0,0,.07);
+        }
+
+        .offer-top {
+            background: #111827;
+            color: white;
+            padding: 30px;
+            position: relative;
+        }
+
+        .offer-top i {
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        .discount {
+            font-size: 36px;
+            font-weight: 800;
+        }
+
+        .offer-body {
+            padding: 25px;
+        }
+
+        .offer-body h4 {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .offer-body p {
+            color: #6b7280;
+        }
+
+        .offer-code {
+            background: #f3f4f6;
+            border: 2px dashed #9ca3af;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin: 18px 0;
+        }
+
+        .shop-btn {
+            display: inline-block;
+            background: #111827;
+            color: white;
+            padding: 11px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .shop-btn:hover {
+            background: #374151;
+            color: white;
+        }
+
+        .deal-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.07);
+        }
+
+        .deal-icon {
+            width: 65px;
+            height: 65px;
+            background: #111827;
+            color: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 20px;
+        }
+
+        .deal-box h3 {
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .deal-box p {
+            color: #6b7280;
+        }
+
+        .offer-note {
+            background: #111827;
+            color: white;
+            border-radius: 20px;
+            padding: 45px 25px;
+            text-align: center;
+        }
+
+        .offer-note i {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .offer-note p {
+            color: #d1d5db;
+        }
+
+        footer {
+            background: #111827;
+            color: #d1d5db;
+            padding: 35px 20px;
+        }
+
+        footer h5 {
+            color: white;
+            font-weight: 700;
+        }
+
+        @media(max-width: 768px) {
+            .offers-hero h1 {
+                font-size: 36px;
+            }
+
+            .offers-hero {
+                padding: 60px 20px;
+            }
+
+            .deal-box {
+                padding: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fa-solid fa-cart-shopping me-2"></i>
+            CartNova
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop' %}">
+                        Shop
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">
+                        About
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">
+                        Contact
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'faq' %}">
+                        FAQ
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'offers' %}">
+                        Offers
+                    </a>
+                </li>
+
+                {% if user.is_authenticated %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Cart
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'wishlist' %}">
+                        <i class="fa-solid fa-heart"></i>
+                        Wishlist
+                    </a>
+                </li>
+
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+<section class="offers-hero">
+
+    <div class="container">
+
+        <h1>
+            Offers & Deals
+        </h1>
+
+        <p>
+            Discover exciting deals and special offers available
+            on CartNova. Save more while shopping for your
+            favourite products.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- OFFERS -->
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                Today's Special Offers
+            </h2>
+
+            <p class="text-muted">
+                Explore our featured deals and start shopping.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- OFFER 1 -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="offer-card">
+
+                    <div class="offer-top">
+
+                        <i class="fa-solid fa-tag"></i>
+
+                        <div class="discount">
+                            20% OFF
+                        </div>
+
+                        <p class="mb-0">
+                            On selected products
+                        </p>
+
+                    </div>
+
+                    <div class="offer-body">
+
+                        <h4>
+                            Weekend Special
+                        </h4>
+
+                        <p>
+                            Get extra savings on selected products
+                            during our special weekend offer.
+                        </p>
+
+                        <div class="offer-code">
+                            CART20
+                        </div>
+
+                        <a href="{% url 'shop' %}" class="shop-btn">
+                            Shop Now
+                            <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- OFFER 2 -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="offer-card">
+
+                    <div class="offer-top">
+
+                        <i class="fa-solid fa-bolt"></i>
+
+                        <div class="discount">
+                            15% OFF
+                        </div>
+
+                        <p class="mb-0">
+                            Limited-time savings
+                        </p>
+
+                    </div>
+
+                    <div class="offer-body">
+
+                        <h4>
+                            Flash Deal
+                        </h4>
+
+                        <p>
+                            Enjoy special savings on selected
+                            products while the offer lasts.
+                        </p>
+
+                        <div class="offer-code">
+                            FLASH15
+                        </div>
+
+                        <a href="{% url 'shop' %}" class="shop-btn">
+                            Explore Deals
+                            <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- OFFER 3 -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="offer-card">
+
+                    <div class="offer-top">
+
+                        <i class="fa-solid fa-gift"></i>
+
+                        <div class="discount">
+                            10% OFF
+                        </div>
+
+                        <p class="mb-0">
+                            Special shopping offer
+                        </p>
+
+                    </div>
+
+                    <div class="offer-body">
+
+                        <h4>
+                            Welcome Deal
+                        </h4>
+
+                        <p>
+                            New customers can enjoy a special
+                            introductory offer on eligible purchases.
+                        </p>
+
+                        <div class="offer-code">
+                            WELCOME10
+                        </div>
+
+                        <a href="{% url 'shop' %}" class="shop-btn">
+                            Start Shopping
+                            <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DEAL FEATURES -->
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                More Ways To Save
+            </h2>
+
+            <p class="text-muted">
+                Make the most of your CartNova shopping experience.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-md-4">
+
+                <div class="deal-box">
+
+                    <div class="deal-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+
+                    <h3>
+                        Product Deals
+                    </h3>
+
+                    <p>
+                        Explore selected products and discover
+                        special prices available in our shop.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="deal-box">
+
+                    <div class="deal-icon">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </div>
+
+                    <h3>
+                        Smart Shopping
+                    </h3>
+
+                    <p>
+                        Add your favourite products to the cart
+                        and review everything before checkout.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="deal-box">
+
+                    <div class="deal-icon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+
+                    <h3>
+                        Save For Later
+                    </h3>
+
+                    <p>
+                        Use your wishlist to save products that
+                        you want to purchase later.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="offer-note">
+
+            <i class="fa-solid fa-percent"></i>
+
+            <h2 class="fw-bold">
+                Don't Miss Our Deals
+            </h2>
+
+            <p class="mt-2 mb-4">
+                Visit the shop and discover products available
+                on CartNova.
+            </p>
+
+            <a href="{% url 'shop' %}" class="shop-btn bg-white text-dark">
+                Browse Shop
+                <i class="fa-solid fa-arrow-right ms-2"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+
+                <h5>
+                    <i class="fa-solid fa-cart-shopping me-2"></i>
+                    CartNova
+                </h5>
+
+                <p class="mt-3">
+                    Your modern destination for convenient online shopping.
+                </p>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <h5>
+                    Quick Links
+                </h5>
+
+                <p class="mb-1">
+                    <a href="{% url 'home' %}"
+                       class="text-light text-decoration-none">
+                        Home
+                    </a>
+                </p>
+
+                <p class="mb-1">
+                    <a href="{% url 'shop' %}"
+                       class="text-light text-decoration-none">
+                        Shop
+                    </a>
+                </p>
+
+                <p class="mb-1">
+                    <a href="{% url 'about' %}"
+                       class="text-light text-decoration-none">
+                        About Us
+                    </a>
+                </p>
+
+                <p class="mb-1">
+                    <a href="{% url 'contact' %}"
+                       class="text-light text-decoration-none">
+                        Contact
+                    </a>
+                </p>
+
+                <p class="mb-1">
+                    <a href="{% url 'faq' %}"
+                       class="text-light text-decoration-none">
+                        FAQ
+                    </a>
+                </p>
+
+                <p class="mb-1">
+                    <a href="{% url 'offers' %}"
+                       class="text-light text-decoration-none">
+                        Offers
+                    </a>
+                </p>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <h5>
+                    Follow Us
+                </h5>
+
+                <div class="fs-4">
+
+                    <i class="fa-brands fa-facebook me-3"></i>
+
+                    <i class="fa-brands fa-instagram me-3"></i>
+
+                    <i class="fa-brands fa-twitter"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="mt-4">
+
+        <p class="text-center mb-0">
+            © 2026 CartNova. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
